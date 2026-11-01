@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Yademoon.Api/Yademoon.Api.csproj" />
+  <Project Path="Yademoon.Application/Yademoon.Application.csproj" />
+  <Project Path="Yademoon.Domain/Yademoon.Domain.csproj" />
+  <Project Path="Yademoon.Infrastructure/Yademoon.Infrastructure.csproj" />
+  <Project Path="Yademoon.Tests/Yademoon.Tests.csproj" />
+</Solution>
