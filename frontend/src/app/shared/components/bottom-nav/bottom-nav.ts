@@ -6,21 +6,27 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   imports: [RouterLink, RouterLinkActive],
   template: `
     <nav class="bottom-nav" aria-label="ناوبری اصلی">
-      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
-        <span class="icon" aria-hidden="true">⌂</span>
-        <span>خانه</span>
+      <div class="nav-side">
+        <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+          <span class="icon" aria-hidden="true">⌂</span>
+          <span>خانه</span>
+        </a>
+        <a routerLink="/people" routerLinkActive="active" class="nav-item">
+          <span class="icon" aria-hidden="true">♡</span>
+          <span>افراد</span>
+        </a>
+      </div>
+
+      <a routerLink="/people/new" class="cta" aria-label="افزودن فرد">
+        <span class="plus" aria-hidden="true">+</span>
       </a>
-      <a routerLink="/people" routerLinkActive="active" class="nav-item">
-        <span class="icon" aria-hidden="true">♡</span>
-        <span>افراد</span>
-      </a>
-      <a routerLink="/people/new" class="nav-item cta" aria-label="افزودن فرد">
-        <span class="plus">+</span>
-      </a>
-      <a routerLink="/settings" routerLinkActive="active" class="nav-item">
-        <span class="icon" aria-hidden="true">⚙</span>
-        <span>تنظیمات</span>
-      </a>
+
+      <div class="nav-side">
+        <a routerLink="/settings" routerLinkActive="active" class="nav-item">
+          <span class="icon" aria-hidden="true">⚙</span>
+          <span>تنظیمات</span>
+        </a>
+      </div>
     </nav>
   `,
   styles: `
@@ -30,20 +36,26 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       bottom: 0;
       z-index: 40;
       display: grid;
-      grid-template-columns: 1fr 1fr auto 1fr;
-      gap: 0.25rem;
-      align-items: end;
-      padding: 0.5rem 1rem calc(0.5rem + env(safe-area-inset-bottom));
+      grid-template-columns: 1fr 3.5rem 1fr;
+      align-items: center;
+      min-height: 4rem;
+      padding: 0.45rem 0.75rem calc(0.45rem + env(safe-area-inset-bottom));
       background: color-mix(in srgb, var(--paper) 92%, transparent);
       backdrop-filter: blur(10px);
       border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    }
+    .nav-side {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      min-width: 0;
     }
     .nav-item {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.15rem;
-      padding: 0.35rem;
+      padding: 0.35rem 0.5rem;
       color: color-mix(in srgb, var(--ink) 55%, transparent);
       text-decoration: none;
       font-size: 0.75rem;
@@ -58,17 +70,22 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       line-height: 1;
     }
     .cta {
+      justify-self: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 3.25rem;
       height: 3.25rem;
+      margin-top: -1.35rem;
       border-radius: 50%;
       background: linear-gradient(145deg, var(--rose), var(--apricot));
       color: white;
-      justify-content: center;
+      text-decoration: none;
       box-shadow: 0 8px 20px color-mix(in srgb, var(--rose) 35%, transparent);
-      transform: translateY(-0.55rem);
+      transition: transform 140ms ease;
     }
     .cta:active {
-      transform: translateY(-0.55rem) scale(0.96);
+      transform: scale(0.96);
     }
     .plus {
       font-size: 1.75rem;
