@@ -9,22 +9,14 @@ import { LoadingComponent } from '../../../shared/components/loading/loading';
   selector: 'app-person-detail',
   imports: [RouterLink, LoadingComponent],
   template: `
-    <section class="page">
-      @if (loading()) {
-        <app-loading />
-      } @else if (error()) {
-        <p class="error">{{ error() }}</p>
-      } @else if (person(); as p) {
-        <a routerLink="/people" class="back">بازگشت</a>
-        <article class="fade-up">
-          <figure class="mood">
-            <img
-              src="/images/yademoon-auth-hero.jpg"
-              alt="شمع تولد و حال‌وهوای گرم یادآوری"
-              width="800"
-              height="450"
-            />
-          </figure>
+    <section class="scene scene--form page">
+      <div class="page-panel fade-up">
+        @if (loading()) {
+          <app-loading />
+        } @else if (error()) {
+          <p class="error">{{ error() }}</p>
+        } @else if (person(); as p) {
+          <a routerLink="/people" class="back">بازگشت</a>
           <h1>{{ p.name }}</h1>
           <p class="relation">{{ labels[p.relation] }}</p>
           <p class="stat">
@@ -54,37 +46,25 @@ import { LoadingComponent } from '../../../shared/components/loading/loading';
             <a class="btn primary" [routerLink]="['/people', p.id, 'edit']">ویرایش</a>
             <button class="btn ghost" type="button" (click)="remove(p.id)">حذف</button>
           </div>
-        </article>
-      }
+        }
+      </div>
     </section>
   `,
   styles: `
     .page {
-      padding: 1.5rem 1.25rem 6.5rem;
+      padding: 1.15rem 1rem 6.25rem;
       max-width: 40rem;
       margin: 0 auto;
     }
     .back {
       text-decoration: none;
       color: color-mix(in srgb, var(--ink) 65%, transparent);
-    }
-    .mood {
-      margin: 0.85rem 0 0.35rem;
-      border-radius: 18px;
-      overflow: hidden;
-      aspect-ratio: 16 / 9;
-      max-height: 180px;
-    }
-    .mood img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+      font-size: 0.92rem;
     }
     h1 {
-      margin: 0.75rem 0 0.25rem;
+      margin: 0.55rem 0 0.2rem;
       font-family: var(--font-display);
-      font-size: 2.2rem;
+      font-size: 1.9rem;
       color: var(--rose);
     }
     .relation {
@@ -92,27 +72,27 @@ import { LoadingComponent } from '../../../shared/components/loading/loading';
       color: color-mix(in srgb, var(--ink) 65%, transparent);
     }
     .stat {
-      margin: 1rem 0;
-      font-size: 1.15rem;
+      margin: 0.75rem 0;
+      font-size: 1.05rem;
       font-weight: 600;
     }
     dl {
-      margin: 0 0 1.5rem;
+      margin: 0 0 1.15rem;
     }
     dl div {
-      padding: 0.7rem 0;
+      padding: 0.55rem 0;
       border-bottom: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
     }
     dt {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: color-mix(in srgb, var(--ink) 55%, transparent);
     }
     dd {
-      margin: 0.2rem 0 0;
+      margin: 0.15rem 0 0;
     }
     .actions {
       display: flex;
-      gap: 0.75rem;
+      gap: 0.65rem;
     }
   `,
 })

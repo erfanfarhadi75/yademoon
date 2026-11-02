@@ -45,8 +45,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       column-gap: 0.25rem;
       min-height: 4rem;
       padding: 0.35rem 0.35rem calc(0.35rem + env(safe-area-inset-bottom));
-      background: color-mix(in srgb, var(--paper) 92%, transparent);
-      backdrop-filter: blur(10px);
+      background: color-mix(in srgb, var(--paper) 78%, transparent);
+      backdrop-filter: blur(14px);
       border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
     }
     .side {

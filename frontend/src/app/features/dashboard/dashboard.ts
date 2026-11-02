@@ -11,187 +11,162 @@ import { environment } from '../../../environments/environment';
   selector: 'app-dashboard',
   imports: [RouterLink, EmptyStateComponent, LoadingComponent],
   template: `
-    <section class="page">
-      <header class="hero fade-up">
-        <p class="brand">{{ productName }}</p>
-        <h1>سلام {{ data()?.greetingName || '' }}</h1>
-        <p class="lead">روزهای قشنگ رو با هم از دست ندیم.</p>
-        <figure class="mood">
-          <img
-            src="/images/yademoon-dashboard-banner.jpg"
-            alt="یادگاری‌های گرم تولد و گل"
-            width="800"
-            height="450"
+    <section class="scene scene--home page">
+      <div class="page-panel fade-up">
+        <header class="hero">
+          <p class="brand">{{ productName }}</p>
+          <h1>سلام {{ data()?.greetingName || '' }}</h1>
+          <p class="lead">روزهای قشنگ رو با هم از دست ندیم.</p>
+        </header>
+
+        @if (loading()) {
+          <app-loading />
+        } @else if (error()) {
+          <p class="error">{{ error() }}</p>
+        } @else if ((data()?.totalPeople ?? 0) === 0) {
+          <app-empty-state
+            title="هنوز کسی ثبت نشده"
+            hint="اولین نفر از آدم‌های مهم زندگی‌ات را اضافه کن."
+            ctaLabel="افزودن اولین نفر"
           />
-        </figure>
-      </header>
+        } @else {
+          <div class="counts">
+            <div>
+              <strong>{{ fa(data()!.totalPeople) }}</strong>
+              <span>نفر</span>
+            </div>
+            <div>
+              <strong>{{ fa(data()!.todayCount) }}</strong>
+              <span>امروز</span>
+            </div>
+            <div>
+              <strong>{{ fa(data()!.upcomingCount) }}</strong>
+              <span>نزدیک</span>
+            </div>
+            <div>
+              <strong>{{ fa(data()!.thisMonthCount) }}</strong>
+              <span>این ماه</span>
+            </div>
+          </div>
 
-      @if (loading()) {
-        <app-loading />
-      } @else if (error()) {
-        <p class="error">{{ error() }}</p>
-      } @else if ((data()?.totalPeople ?? 0) === 0) {
-        <app-empty-state
-          title="هنوز کسی ثبت نشده"
-          hint="اولین نفر از آدم‌های مهم زندگی‌ات را اضافه کن."
-          ctaLabel="افزودن اولین نفر"
-          imageSrc="/images/yademoon-empty-hearts.jpg"
-        />
-      } @else {
-        <div class="counts fade-up" style="animation-delay: 80ms">
-          <div>
-            <strong>{{ fa(data()!.totalPeople) }}</strong>
-            <span>نفر</span>
-          </div>
-          <div>
-            <strong>{{ fa(data()!.todayCount) }}</strong>
-            <span>امروز</span>
-          </div>
-          <div>
-            <strong>{{ fa(data()!.upcomingCount) }}</strong>
-            <span>نزدیک</span>
-          </div>
-          <div>
-            <strong>{{ fa(data()!.thisMonthCount) }}</strong>
-            <span>این ماه</span>
-          </div>
-        </div>
+          @if (data()?.nearest; as nearest) {
+            <article class="nearest">
+              <p class="eyebrow">نزدیک‌ترین تولد</p>
+              <h2>{{ nearest.name }}</h2>
+              <p>
+                {{ relation(nearest) }} ·
+                @if (nearest.daysUntil === 0) {
+                  امروز
+                } @else {
+                  {{ fa(nearest.daysUntil) }} روز مانده
+                }
+              </p>
+              <p class="date">{{ jalali.formatJalali(nearest.nextBirthday) }}</p>
+            </article>
+          }
 
-        @if (data()?.nearest; as nearest) {
-          <article class="nearest fade-up" style="animation-delay: 140ms">
-            <p class="eyebrow">نزدیک‌ترین تولد</p>
-            <h2>{{ nearest.name }}</h2>
-            <p>
-              {{ relation(nearest) }} ·
-              @if (nearest.daysUntil === 0) {
-                امروز 🎉
-              } @else {
-                {{ fa(nearest.daysUntil) }} روز مانده
+          @if (data()!.today.length) {
+            <section class="block">
+              <h3>امروز</h3>
+              @for (p of data()!.today; track p.id) {
+                <a class="row" [routerLink]="['/people', p.id]">{{ p.name }}</a>
               }
-            </p>
-            <p class="date">{{ jalali.formatJalali(nearest.nextBirthday) }}</p>
-          </article>
-        }
+            </section>
+          }
 
-        @if (data()!.today.length) {
-          <section class="block fade-up" style="animation-delay: 180ms">
-            <h3>امروز</h3>
-            @for (p of data()!.today; track p.id) {
-              <a class="row" [routerLink]="['/people', p.id]">{{ p.name }}</a>
-            }
-          </section>
-        }
+          @if (data()!.upcoming.length) {
+            <section class="block">
+              <h3>نزدیک (۳۰ روز)</h3>
+              @for (p of data()!.upcoming; track p.id) {
+                <a class="row" [routerLink]="['/people', p.id]">
+                  <span>{{ p.name }}</span>
+                  <span class="muted">{{ fa(p.daysUntil) }} روز</span>
+                </a>
+              }
+            </section>
+          }
 
-        @if (data()!.upcoming.length) {
-          <section class="block fade-up" style="animation-delay: 220ms">
-            <h3>نزدیک (۳۰ روز)</h3>
-            @for (p of data()!.upcoming; track p.id) {
-              <a class="row" [routerLink]="['/people', p.id]">
-                <span>{{ p.name }}</span>
-                <span class="muted">{{ fa(p.daysUntil) }} روز</span>
-              </a>
-            }
-          </section>
+          <a class="btn primary block add" routerLink="/people/new">افزودن نفر جدید</a>
         }
-
-        <a class="btn primary block fade-up" style="animation-delay: 260ms" routerLink="/people/new">
-          افزودن نفر جدید
-        </a>
-      }
+      </div>
     </section>
   `,
   styles: `
     .page {
-      padding: 1.5rem 1.25rem 6.5rem;
+      padding: 1.15rem 1rem 6.25rem;
       max-width: 40rem;
       margin: 0 auto;
     }
     .brand {
       font-family: var(--font-display);
-      font-size: clamp(2.2rem, 7vw, 3rem);
+      font-size: clamp(2rem, 7vw, 2.7rem);
       color: var(--rose);
-      margin: 0 0 0.5rem;
+      margin: 0 0 0.35rem;
     }
     h1 {
-      margin: 0 0 0.35rem;
-      font-size: 1.4rem;
+      margin: 0 0 0.25rem;
+      font-size: 1.25rem;
     }
     .lead {
       margin: 0;
       color: color-mix(in srgb, var(--ink) 68%, transparent);
-    }
-    .mood {
-      margin: 1.15rem 0 0;
-      border-radius: 18px;
-      overflow: hidden;
-      aspect-ratio: 16 / 9;
-      max-height: 200px;
-    }
-    .mood img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transform: scale(1.02);
-      transition: transform 480ms ease;
-    }
-    .hero:hover .mood img {
-      transform: scale(1.06);
+      font-size: 0.95rem;
     }
     .counts {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 0.5rem;
-      margin: 1.35rem 0 1.25rem;
+      gap: 0.4rem;
+      margin: 1.1rem 0 0.9rem;
       text-align: center;
     }
     .counts strong {
       display: block;
-      font-size: 1.35rem;
+      font-size: 1.2rem;
       color: var(--rose);
     }
     .counts span {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: color-mix(in srgb, var(--ink) 60%, transparent);
     }
     .nearest {
-      padding: 1.25rem 0;
+      padding: 0.9rem 0;
       border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
       border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.9rem;
     }
     .eyebrow {
       margin: 0;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--apricot-deep);
     }
     .nearest h2 {
-      margin: 0.25rem 0;
+      margin: 0.15rem 0;
       font-family: var(--font-display);
-      font-size: 1.8rem;
+      font-size: 1.55rem;
     }
     .date {
-      margin: 0.35rem 0 0;
+      margin: 0.25rem 0 0;
       color: color-mix(in srgb, var(--ink) 65%, transparent);
+      font-size: 0.92rem;
     }
     .block h3 {
-      margin: 0 0 0.5rem;
-      font-size: 1rem;
+      margin: 0 0 0.35rem;
+      font-size: 0.95rem;
     }
     .row {
       display: flex;
       justify-content: space-between;
-      padding: 0.7rem 0;
+      padding: 0.55rem 0;
       text-decoration: none;
       color: var(--ink);
       border-bottom: 1px solid color-mix(in srgb, var(--ink) 6%, transparent);
     }
     .muted {
       color: color-mix(in srgb, var(--ink) 55%, transparent);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
-    .btn.block {
-      margin-top: 1.5rem;
+    .add {
+      margin-top: 1.1rem;
     }
   `,
 })

@@ -8,11 +8,8 @@ import { environment } from '../../../../environments/environment';
   selector: 'app-register',
   imports: [ReactiveFormsModule, RouterLink],
   template: `
-    <section class="auth-page">
-      <div class="visual fade-up" aria-hidden="true">
-        <img src="/images/yademoon-auth-hero.jpg" alt="" />
-      </div>
-      <div class="auth-shell fade-up" style="animation-delay: 80ms">
+    <section class="scene scene--auth auth-page">
+      <div class="auth-shell page-panel fade-up">
         <p class="brand">{{ productName }}</p>
         <h1>ساخت حساب</h1>
         <p class="lead">چند لحظه تا یادآوری گرم برای آدم‌های مهم زندگی‌ات.</p>
@@ -46,66 +43,37 @@ import { environment } from '../../../../environments/environment';
   `,
   styles: `
     .auth-page {
-      min-height: 100dvh;
       display: grid;
-    }
-    .visual {
-      min-height: 34vh;
-      max-height: 280px;
-      overflow: hidden;
-    }
-    .visual img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 45%;
-      display: block;
+      place-items: center;
+      padding: 1.5rem 1.1rem 2rem;
     }
     .auth-shell {
-      max-width: 26rem;
-      margin: 0 auto;
-      padding: 1.5rem 1.25rem 2.5rem;
-      width: 100%;
+      width: min(100%, 24.5rem);
     }
     .brand {
       font-family: var(--font-display);
-      font-size: clamp(2.4rem, 8vw, 3.2rem);
+      font-size: clamp(2.35rem, 8vw, 3rem);
       color: var(--rose);
-      margin: 0 0 0.75rem;
+      margin: 0 0 0.55rem;
     }
     h1 {
-      margin: 0 0 0.4rem;
-      font-size: 1.35rem;
+      margin: 0 0 0.35rem;
+      font-size: 1.25rem;
     }
     .lead {
-      margin: 0 0 1.75rem;
+      margin: 0 0 1.25rem;
       color: color-mix(in srgb, var(--ink) 70%, transparent);
-      line-height: 1.7;
+      line-height: 1.65;
+      font-size: 0.95rem;
     }
     form {
       display: grid;
-      gap: 0.9rem;
+      gap: 0.8rem;
     }
     .switch {
-      margin-top: 1.25rem;
+      margin-top: 1rem;
       text-align: center;
-    }
-    @media (min-width: 900px) {
-      .auth-page {
-        grid-template-columns: 1.15fr 1fr;
-      }
-      .visual {
-        min-height: 100dvh;
-        max-height: none;
-      }
-      .auth-shell {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 3rem 3rem 3rem 2rem;
-        max-width: 28rem;
-        margin: 0;
-      }
+      font-size: 0.95rem;
     }
   `,
 })

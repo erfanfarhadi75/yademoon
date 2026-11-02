@@ -10,99 +10,103 @@ import { LoadingComponent } from '../../../shared/components/loading/loading';
   selector: 'app-person-form',
   imports: [ReactiveFormsModule, RouterLink, LoadingComponent],
   template: `
-    <section class="page">
-      <a routerLink="/people" class="back">بازگشت</a>
-      <h1>{{ isEdit() ? 'ویرایش' : 'افزودن فرد' }}</h1>
+    <section class="scene scene--form page">
+      <div class="page-panel fade-up">
+        <a routerLink="/people" class="back">بازگشت</a>
+        <h1>{{ isEdit() ? 'ویرایش' : 'افزودن فرد' }}</h1>
 
-      @if (loading()) {
-        <app-loading />
-      } @else {
-        <form class="fade-up" [formGroup]="form" (ngSubmit)="submit()">
-          <label>
-            نام
-            <input type="text" formControlName="name" />
-          </label>
-          <label>
-            رابطه
-            <select formControlName="relation">
-              @for (r of relations; track r) {
-                <option [ngValue]="r">{{ labels[r] }}</option>
-              }
-            </select>
-          </label>
+        @if (loading()) {
+          <app-loading />
+        } @else {
+          <form [formGroup]="form" (ngSubmit)="submit()">
+            <label>
+              نام
+              <input type="text" formControlName="name" />
+            </label>
+            <label>
+              رابطه
+              <select formControlName="relation">
+                @for (r of relations; track r) {
+                  <option [ngValue]="r">{{ labels[r] }}</option>
+                }
+              </select>
+            </label>
 
-          <fieldset>
-            <legend>تاریخ تولد (شمسی)</legend>
-            <div class="jalali-row">
-              <label>
-                روز
-                <select formControlName="jd">
-                  @for (d of days(); track d) {
-                    <option [ngValue]="d">{{ jalali.toFaDigits(d) }}</option>
-                  }
-                </select>
-              </label>
-              <label>
-                ماه
-                <select formControlName="jm">
-                  @for (m of months; track m.v) {
-                    <option [ngValue]="m.v">{{ m.n }}</option>
-                  }
-                </select>
-              </label>
-              <label>
-                سال
-                <select formControlName="jy">
-                  @for (y of years; track y) {
-                    <option [ngValue]="y">{{ jalali.toFaDigits(y) }}</option>
-                  }
-                </select>
-              </label>
-            </div>
-          </fieldset>
+            <fieldset>
+              <legend>تاریخ تولد (شمسی)</legend>
+              <div class="jalali-row">
+                <label>
+                  روز
+                  <select formControlName="jd">
+                    @for (d of days(); track d) {
+                      <option [ngValue]="d">{{ jalali.toFaDigits(d) }}</option>
+                    }
+                  </select>
+                </label>
+                <label>
+                  ماه
+                  <select formControlName="jm">
+                    @for (m of months; track m.v) {
+                      <option [ngValue]="m.v">{{ m.n }}</option>
+                    }
+                  </select>
+                </label>
+                <label>
+                  سال
+                  <select formControlName="jy">
+                    @for (y of years; track y) {
+                      <option [ngValue]="y">{{ jalali.toFaDigits(y) }}</option>
+                    }
+                  </select>
+                </label>
+              </div>
+            </fieldset>
 
-          <label>
-            یادداشت (اختیاری)
-            <textarea rows="3" formControlName="notes"></textarea>
-          </label>
+            <label>
+              یادداشت (اختیاری)
+              <textarea rows="3" formControlName="notes"></textarea>
+            </label>
 
-          @if (error()) {
-            <p class="error">{{ error() }}</p>
-          }
+            @if (error()) {
+              <p class="error">{{ error() }}</p>
+            }
 
-          <button class="btn primary block" type="submit" [disabled]="form.invalid || saving()">
-            ذخیره
-          </button>
-        </form>
-      }
+            <button class="btn primary block" type="submit" [disabled]="form.invalid || saving()">
+              ذخیره
+            </button>
+          </form>
+        }
+      </div>
     </section>
   `,
   styles: `
     .page {
-      padding: 1.5rem 1.25rem 6.5rem;
+      padding: 1.15rem 1rem 6.25rem;
       max-width: 40rem;
       margin: 0 auto;
     }
     .back {
       display: inline-block;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.55rem;
       color: color-mix(in srgb, var(--ink) 65%, transparent);
       text-decoration: none;
+      font-size: 0.92rem;
     }
     h1 {
-      margin: 0 0 1.25rem;
+      margin: 0 0 0.95rem;
       font-family: var(--font-display);
-      font-size: 2rem;
+      font-size: 1.85rem;
       color: var(--rose);
     }
     form {
       display: grid;
-      gap: 0.9rem;
+      gap: 0.8rem;
     }
     fieldset {
       border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
       border-radius: 14px;
-      padding: 0.85rem;
+      padding: 0.75rem;
+      background: color-mix(in srgb, white 35%, transparent);
     }
     legend {
       padding: 0 0.35rem;

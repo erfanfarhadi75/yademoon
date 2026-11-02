@@ -9,6 +9,12 @@
   --mist: #f3e0d4;
   --font-body: 'Vazirmatn', Tahoma, sans-serif;
   --font-display: 'Lalezar', 'Vazirmatn', Tahoma, sans-serif;
+  --scene-wash: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper) 88%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 78%, transparent) 42%,
+    color-mix(in srgb, var(--mist) 86%, transparent) 100%
+  );
 }
 
 *,
@@ -26,11 +32,7 @@ body {
   min-height: 100dvh;
   font-family: var(--font-body);
   color: var(--ink);
-  background:
-    radial-gradient(1200px 600px at 100% -10%, color-mix(in srgb, var(--apricot) 35%, transparent), transparent 60%),
-    radial-gradient(900px 500px at -10% 110%, color-mix(in srgb, var(--rose) 22%, transparent), transparent 55%),
-    linear-gradient(180deg, var(--paper), var(--mist));
-  background-attachment: fixed;
+  background: var(--paper);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -54,7 +56,7 @@ textarea {
   border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
   border-radius: 12px;
   padding: 0.7rem 0.85rem;
-  background: color-mix(in srgb, white 78%, var(--paper));
+  background: color-mix(in srgb, white 82%, var(--paper));
   color: var(--ink);
 }
 
@@ -89,9 +91,10 @@ textarea:focus {
 }
 
 .btn.ghost {
-  background: transparent;
+  background: color-mix(in srgb, white 55%, transparent);
   color: var(--rose);
   border: 1px solid color-mix(in srgb, var(--rose) 40%, transparent);
+  backdrop-filter: blur(6px);
 }
 
 .btn.block {
@@ -123,8 +126,99 @@ textarea:focus {
   }
 }
 
+/* Fixed atmospheric photo backgrounds — no layout height / scroll cost */
+.scene {
+  position: relative;
+  isolation: isolate;
+  min-height: 100dvh;
+}
+
+.scene::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-color: var(--paper);
+  background-image: var(--scene-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1.04);
+  filter: saturate(0.92) brightness(1.02);
+}
+
+.scene::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--scene-wash);
+  pointer-events: none;
+}
+
+.scene--auth {
+  --scene-image: url('/images/yademoon-auth-hero.jpg');
+  --scene-wash: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper) 55%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 78%, transparent) 38%,
+    color-mix(in srgb, var(--mist) 90%, transparent) 100%
+  );
+}
+
+.scene--home {
+  --scene-image: url('/images/yademoon-dashboard-banner.jpg');
+}
+
+.scene--people {
+  --scene-image: url('/images/yademoon-dashboard-banner.jpg');
+  --scene-wash: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--paper) 90%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 80%, transparent) 50%,
+    color-mix(in srgb, var(--mist) 88%, transparent) 100%
+  );
+}
+
+.scene--upcoming {
+  --scene-image: url('/images/yademoon-upcoming-banner.jpg');
+}
+
+.scene--settings {
+  --scene-image: url('/images/yademoon-upcoming-banner.jpg');
+  --scene-wash: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper) 86%, transparent),
+    color-mix(in srgb, var(--mist) 90%, transparent)
+  );
+}
+
+.scene--form {
+  --scene-image: url('/images/yademoon-auth-hero.jpg');
+  --scene-wash: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper) 84%, transparent),
+    color-mix(in srgb, var(--mist) 88%, transparent)
+  );
+}
+
+.page-panel {
+  background: color-mix(in srgb, white 58%, transparent);
+  backdrop-filter: blur(10px);
+  border: 1px solid color-mix(in srgb, white 55%, transparent);
+  border-radius: 20px;
+  padding: 1.15rem 1.1rem 1.25rem;
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
 @media (min-width: 768px) {
   body {
     font-size: 1.02rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    animation: none;
   }
 }

@@ -10,85 +10,66 @@ import { JalaliDateService } from '../../shared/services/jalali-date.service';
   selector: 'app-upcoming',
   imports: [RouterLink, EmptyStateComponent, LoadingComponent],
   template: `
-    <section class="page">
-      <header class="fade-up">
-        <h1>نزدیک‌ها</h1>
-        <p class="lead">تولدهای ۳۰ روز آینده، به‌ترتیب نزدیک‌ترین</p>
-        <figure class="mood">
-          <img
-            src="/images/yademoon-upcoming-banner.jpg"
-            alt="تقویم و یادداشت‌های نرم برای تولدهای نزدیک"
-            width="800"
-            height="450"
-          />
-        </figure>
-      </header>
+    <section class="scene scene--upcoming page">
+      <div class="page-panel fade-up">
+        <header>
+          <h1>نزدیک‌ها</h1>
+          <p class="lead">تولدهای ۳۰ روز آینده، به‌ترتیب نزدیک‌ترین</p>
+        </header>
 
-      @if (loading()) {
-        <app-loading />
-      } @else if (error()) {
-        <p class="error">{{ error() }}</p>
-      } @else if (!items().length) {
-        <app-empty-state
-          title="تولد نزدیکی نیست"
-          hint="در ۳۰ روز آینده تولدی ثبت نشده. کسی را اضافه کن یا بعداً سر بزن."
-          ctaLabel="افزودن نفر"
-          imageSrc="/images/yademoon-empty-hearts.jpg"
-        />
-      } @else {
-        <ul class="list fade-up">
-          @for (p of items(); track p.id) {
-            <li>
-              <a [routerLink]="['/people', p.id]">
-                <div>
-                  <strong>{{ p.name }}</strong>
-                  <span>{{ labels[p.relation] }}</span>
-                </div>
-                <div class="meta">
-                  <span>{{ jalali.formatJalali(p.nextBirthday) }}</span>
-                  <span class="days">
-                    @if (p.daysUntil === 0) {
-                      امروز
-                    } @else {
-                      {{ jalali.toFaDigits(p.daysUntil) }} روز
-                    }
-                  </span>
-                </div>
-              </a>
-            </li>
-          }
-        </ul>
-      }
+        @if (loading()) {
+          <app-loading />
+        } @else if (error()) {
+          <p class="error">{{ error() }}</p>
+        } @else if (!items().length) {
+          <app-empty-state
+            title="تولد نزدیکی نیست"
+            hint="در ۳۰ روز آینده تولدی ثبت نشده. کسی را اضافه کن یا بعداً سر بزن."
+            ctaLabel="افزودن نفر"
+          />
+        } @else {
+          <ul class="list">
+            @for (p of items(); track p.id) {
+              <li>
+                <a [routerLink]="['/people', p.id]">
+                  <div>
+                    <strong>{{ p.name }}</strong>
+                    <span>{{ labels[p.relation] }}</span>
+                  </div>
+                  <div class="meta">
+                    <span>{{ jalali.formatJalali(p.nextBirthday) }}</span>
+                    <span class="days">
+                      @if (p.daysUntil === 0) {
+                        امروز
+                      } @else {
+                        {{ jalali.toFaDigits(p.daysUntil) }} روز
+                      }
+                    </span>
+                  </div>
+                </a>
+              </li>
+            }
+          </ul>
+        }
+      </div>
     </section>
   `,
   styles: `
     .page {
-      padding: 1.5rem 1.25rem 6.5rem;
+      padding: 1.15rem 1rem 6.25rem;
       max-width: 40rem;
       margin: 0 auto;
     }
     h1 {
       margin: 0;
       font-family: var(--font-display);
-      font-size: 2rem;
+      font-size: 1.85rem;
       color: var(--rose);
     }
     .lead {
-      margin: 0.35rem 0 0.9rem;
+      margin: 0.3rem 0 0.85rem;
       color: color-mix(in srgb, var(--ink) 65%, transparent);
-    }
-    .mood {
-      margin: 0 0 1.25rem;
-      border-radius: 18px;
-      overflow: hidden;
-      aspect-ratio: 16 / 9;
-      max-height: 180px;
-    }
-    .mood img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+      font-size: 0.95rem;
     }
     .list {
       list-style: none;
@@ -99,7 +80,7 @@ import { JalaliDateService } from '../../shared/services/jalali-date.service';
       display: flex;
       justify-content: space-between;
       gap: 1rem;
-      padding: 0.9rem 0;
+      padding: 0.7rem 0;
       text-decoration: none;
       color: var(--ink);
       border-bottom: 1px solid color-mix(in srgb, var(--ink) 7%, transparent);

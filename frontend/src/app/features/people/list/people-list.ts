@@ -11,104 +11,91 @@ import { JalaliDateService } from '../../../shared/services/jalali-date.service'
   selector: 'app-people-list',
   imports: [RouterLink, FormsModule, EmptyStateComponent, LoadingComponent],
   template: `
-    <section class="page">
-      <header class="fade-up">
-        <h1>افراد</h1>
-        <p class="lead">جستجو، فیلتر و مرتب‌سازی تولدها</p>
-        <figure class="mood">
-          <img
-            src="/images/yademoon-dashboard-banner.jpg"
-            alt="یادگاری و هدیه‌های کوچک برای عزیزان"
-            width="800"
-            height="450"
+    <section class="scene scene--people page">
+      <div class="page-panel fade-up">
+        <header>
+          <h1>افراد</h1>
+          <p class="lead">جستجو، فیلتر و مرتب‌سازی تولدها</p>
+        </header>
+
+        <div class="filters">
+          <input
+            type="search"
+            placeholder="جستجوی نام…"
+            [(ngModel)]="search"
+            (ngModelChange)="reload()"
           />
-        </figure>
-      </header>
+          <select [(ngModel)]="relation" (ngModelChange)="reload()">
+            <option [ngValue]="null">همه روابط</option>
+            @for (r of relations; track r) {
+              <option [ngValue]="r">{{ labels[r] }}</option>
+            }
+          </select>
+          <select [(ngModel)]="sort" (ngModelChange)="reload()">
+            <option value="days">نزدیک‌ترین تولد</option>
+            <option value="name">نام</option>
+            <option value="relation">رابطه</option>
+          </select>
+        </div>
 
-      <div class="filters fade-up">
-        <input type="search" placeholder="جستجوی نام…" [(ngModel)]="search" (ngModelChange)="reload()" />
-        <select [(ngModel)]="relation" (ngModelChange)="reload()">
-          <option [ngValue]="null">همه روابط</option>
-          @for (r of relations; track r) {
-            <option [ngValue]="r">{{ labels[r] }}</option>
-          }
-        </select>
-        <select [(ngModel)]="sort" (ngModelChange)="reload()">
-          <option value="days">نزدیک‌ترین تولد</option>
-          <option value="name">نام</option>
-          <option value="relation">رابطه</option>
-        </select>
+        @if (loading()) {
+          <app-loading />
+        } @else if (error()) {
+          <p class="error">{{ error() }}</p>
+        } @else if (!people().length) {
+          <app-empty-state
+            title="کسی پیدا نشد"
+            hint="فرد جدیدی اضافه کن یا فیلتر را عوض کن."
+            ctaLabel="افزودن"
+          />
+        } @else {
+          <ul class="list">
+            @for (p of people(); track p.id) {
+              <li>
+                <a [routerLink]="['/people', p.id]">
+                  <div>
+                    <strong>{{ p.name }}</strong>
+                    <span>{{ labels[p.relation] }}</span>
+                  </div>
+                  <div class="meta">
+                    <span>{{ jalali.formatJalali(p.nextBirthday) }}</span>
+                    <span class="days">
+                      @if (p.daysUntil === 0) {
+                        امروز
+                      } @else {
+                        {{ jalali.toFaDigits(p.daysUntil) }} روز
+                      }
+                    </span>
+                  </div>
+                </a>
+              </li>
+            }
+          </ul>
+        }
       </div>
-
-      @if (loading()) {
-        <app-loading />
-      } @else if (error()) {
-        <p class="error">{{ error() }}</p>
-      } @else if (!people().length) {
-        <app-empty-state
-          title="کسی پیدا نشد"
-          hint="فرد جدیدی اضافه کن یا فیلتر را عوض کن."
-          ctaLabel="افزودن"
-        />
-      } @else {
-        <ul class="list fade-up">
-          @for (p of people(); track p.id) {
-            <li>
-              <a [routerLink]="['/people', p.id]">
-                <div>
-                  <strong>{{ p.name }}</strong>
-                  <span>{{ labels[p.relation] }}</span>
-                </div>
-                <div class="meta">
-                  <span>{{ jalali.formatJalali(p.nextBirthday) }}</span>
-                  <span class="days">
-                    @if (p.daysUntil === 0) {
-                      امروز
-                    } @else {
-                      {{ jalali.toFaDigits(p.daysUntil) }} روز
-                    }
-                  </span>
-                </div>
-              </a>
-            </li>
-          }
-        </ul>
-      }
     </section>
   `,
   styles: `
     .page {
-      padding: 1.5rem 1.25rem 6.5rem;
+      padding: 1.15rem 1rem 6.25rem;
       max-width: 40rem;
       margin: 0 auto;
     }
     h1 {
       margin: 0;
       font-family: var(--font-display);
-      font-size: 2rem;
+      font-size: 1.85rem;
       color: var(--rose);
     }
     .lead {
-      margin: 0.35rem 0 0.9rem;
+      margin: 0.3rem 0 0.85rem;
       color: color-mix(in srgb, var(--ink) 65%, transparent);
-    }
-    .mood {
-      margin: 0 0 1rem;
-      border-radius: 18px;
-      overflow: hidden;
-      aspect-ratio: 16 / 9;
-      max-height: 160px;
-    }
-    .mood img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+      font-size: 0.95rem;
     }
     .filters {
       display: grid;
-      gap: 0.6rem;
-      margin-bottom: 1rem;
+      gap: 0.5rem;
+      margin-bottom: 0.85rem;
     }
     .list {
       list-style: none;
@@ -119,7 +106,7 @@ import { JalaliDateService } from '../../../shared/services/jalali-date.service'
       display: flex;
       justify-content: space-between;
       gap: 1rem;
-      padding: 0.9rem 0;
+      padding: 0.7rem 0;
       text-decoration: none;
       color: var(--ink);
       border-bottom: 1px solid color-mix(in srgb, var(--ink) 7%, transparent);

@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
   template: `
     <div class="empty fade-up">
       @if (imageSrc()) {
-        <img class="illus" [src]="imageSrc()" [alt]="imageAlt()" width="220" height="220" />
+        <img class="illus" [src]="imageSrc()" [alt]="imageAlt()" width="120" height="120" />
       }
       <p class="title">{{ title() }}</p>
       <p class="hint">{{ hint() }}</p>
@@ -19,27 +19,28 @@ import { RouterLink } from '@angular/router';
   styles: `
     .empty {
       text-align: center;
-      padding: 1.5rem 1.25rem 2.5rem;
+      padding: 1.25rem 0.5rem 1.5rem;
     }
     .illus {
-      width: min(220px, 70vw);
-      height: auto;
-      margin: 0 auto 1rem;
+      width: 7rem;
+      height: 7rem;
+      margin: 0 auto 0.75rem;
       display: block;
-      border-radius: 24px;
+      border-radius: 18px;
       object-fit: cover;
-      box-shadow: 0 18px 40px color-mix(in srgb, var(--rose) 12%, transparent);
+      box-shadow: 0 10px 24px color-mix(in srgb, var(--rose) 14%, transparent);
     }
     .title {
       font-family: var(--font-display);
-      font-size: 1.35rem;
-      margin: 0 0 0.5rem;
+      font-size: 1.25rem;
+      margin: 0 0 0.4rem;
       color: var(--ink);
     }
     .hint {
-      margin: 0 0 1.25rem;
+      margin: 0 0 1rem;
       color: color-mix(in srgb, var(--ink) 65%, transparent);
       line-height: 1.7;
+      font-size: 0.95rem;
     }
   `,
 })
