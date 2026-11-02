@@ -8,38 +8,60 @@ import { environment } from '../../../../environments/environment';
   selector: 'app-login',
   imports: [ReactiveFormsModule, RouterLink],
   template: `
-    <section class="auth-shell fade-up">
-      <p class="brand">{{ productName }}</p>
-      <h1>خوش اومدی</h1>
-      <p class="lead">وارد شو تا تولد عزیزانت رو از دست ندی.</p>
+    <section class="auth-page">
+      <div class="visual fade-up" aria-hidden="true">
+        <img src="/images/yademoon-auth-hero.jpg" alt="" />
+      </div>
+      <div class="auth-shell fade-up" style="animation-delay: 80ms">
+        <p class="brand">{{ productName }}</p>
+        <h1>خوش اومدی</h1>
+        <p class="lead">وارد شو تا تولد عزیزانت رو از دست ندی.</p>
 
-      <form [formGroup]="form" (ngSubmit)="submit()">
-        <label>
-          ایمیل
-          <input type="email" formControlName="email" autocomplete="email" />
-        </label>
-        <label>
-          رمز عبور
-          <input type="password" formControlName="password" autocomplete="current-password" />
-        </label>
-        @if (error()) {
-          <p class="error">{{ error() }}</p>
-        }
-        <button class="btn primary block" type="submit" [disabled]="form.invalid || busy()">
-          ورود
-        </button>
-      </form>
-      <p class="switch">
-        حساب نداری؟
-        <a routerLink="/register">ثبت‌نام</a>
-      </p>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <label>
+            ایمیل
+            <input type="email" formControlName="email" autocomplete="email" />
+          </label>
+          <label>
+            رمز عبور
+            <input type="password" formControlName="password" autocomplete="current-password" />
+          </label>
+          @if (error()) {
+            <p class="error">{{ error() }}</p>
+          }
+          <button class="btn primary block" type="submit" [disabled]="form.invalid || busy()">
+            ورود
+          </button>
+        </form>
+        <p class="switch">
+          حساب نداری؟
+          <a routerLink="/register">ثبت‌نام</a>
+        </p>
+      </div>
     </section>
   `,
   styles: `
+    .auth-page {
+      min-height: 100dvh;
+      display: grid;
+    }
+    .visual {
+      min-height: 38vh;
+      max-height: 320px;
+      overflow: hidden;
+    }
+    .visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      display: block;
+    }
     .auth-shell {
       max-width: 26rem;
       margin: 0 auto;
-      padding: 3.5rem 1.25rem 2rem;
+      padding: 1.75rem 1.25rem 2.5rem;
+      width: 100%;
     }
     .brand {
       font-family: var(--font-display);
@@ -65,6 +87,24 @@ import { environment } from '../../../../environments/environment';
     .switch {
       margin-top: 1.25rem;
       text-align: center;
+    }
+    @media (min-width: 900px) {
+      .auth-page {
+        grid-template-columns: 1.15fr 1fr;
+        align-items: stretch;
+      }
+      .visual {
+        min-height: 100dvh;
+        max-height: none;
+      }
+      .auth-shell {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 3rem 3rem 3rem 2rem;
+        max-width: 28rem;
+        margin: 0;
+      }
     }
   `,
 })

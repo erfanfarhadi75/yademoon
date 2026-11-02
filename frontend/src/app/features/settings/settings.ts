@@ -8,6 +8,14 @@ import { environment } from '../../../environments/environment';
     <section class="page fade-up">
       <h1>تنظیمات</h1>
       <p class="lead">حساب و اطلاعات برنامه</p>
+      <figure class="mood">
+        <img
+          src="/images/yademoon-upcoming-banner.jpg"
+          alt="فضای گرم خانه و یادداشت‌های شخصی"
+          width="800"
+          height="450"
+        />
+      </figure>
 
       <dl>
         <div>
@@ -44,8 +52,21 @@ import { environment } from '../../../environments/environment';
       color: var(--rose);
     }
     .lead {
-      margin: 0.35rem 0 1.25rem;
+      margin: 0.35rem 0 0.9rem;
       color: color-mix(in srgb, var(--ink) 65%, transparent);
+    }
+    .mood {
+      margin: 0 0 1.25rem;
+      border-radius: 18px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      max-height: 150px;
+    }
+    .mood img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
     dl div {
       padding: 0.85rem 0;

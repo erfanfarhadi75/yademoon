@@ -16,6 +16,14 @@ import { environment } from '../../../environments/environment';
         <p class="brand">{{ productName }}</p>
         <h1>سلام {{ data()?.greetingName || '' }}</h1>
         <p class="lead">روزهای قشنگ رو با هم از دست ندیم.</p>
+        <figure class="mood">
+          <img
+            src="/images/yademoon-dashboard-banner.jpg"
+            alt="یادگاری‌های گرم تولد و گل"
+            width="800"
+            height="450"
+          />
+        </figure>
       </header>
 
       @if (loading()) {
@@ -27,6 +35,7 @@ import { environment } from '../../../environments/environment';
           title="هنوز کسی ثبت نشده"
           hint="اولین نفر از آدم‌های مهم زندگی‌ات را اضافه کن."
           ctaLabel="افزودن اولین نفر"
+          imageSrc="/images/yademoon-empty-hearts.jpg"
         />
       } @else {
         <div class="counts fade-up" style="animation-delay: 80ms">
@@ -111,11 +120,29 @@ import { environment } from '../../../environments/environment';
       margin: 0;
       color: color-mix(in srgb, var(--ink) 68%, transparent);
     }
+    .mood {
+      margin: 1.15rem 0 0;
+      border-radius: 18px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      max-height: 200px;
+    }
+    .mood img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.02);
+      transition: transform 480ms ease;
+    }
+    .hero:hover .mood img {
+      transform: scale(1.06);
+    }
     .counts {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 0.5rem;
-      margin: 1.75rem 0 1.25rem;
+      margin: 1.35rem 0 1.25rem;
       text-align: center;
     }
     .counts strong {

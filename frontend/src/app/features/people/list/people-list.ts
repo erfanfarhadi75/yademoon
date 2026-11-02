@@ -15,6 +15,14 @@ import { JalaliDateService } from '../../../shared/services/jalali-date.service'
       <header class="fade-up">
         <h1>افراد</h1>
         <p class="lead">جستجو، فیلتر و مرتب‌سازی تولدها</p>
+        <figure class="mood">
+          <img
+            src="/images/yademoon-dashboard-banner.jpg"
+            alt="یادگاری و هدیه‌های کوچک برای عزیزان"
+            width="800"
+            height="450"
+          />
+        </figure>
       </header>
 
       <div class="filters fade-up">
@@ -81,8 +89,21 @@ import { JalaliDateService } from '../../../shared/services/jalali-date.service'
       color: var(--rose);
     }
     .lead {
-      margin: 0.35rem 0 1rem;
+      margin: 0.35rem 0 0.9rem;
       color: color-mix(in srgb, var(--ink) 65%, transparent);
+    }
+    .mood {
+      margin: 0 0 1rem;
+      border-radius: 18px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      max-height: 160px;
+    }
+    .mood img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
     .filters {
       display: grid;

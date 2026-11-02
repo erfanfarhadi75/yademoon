@@ -14,6 +14,14 @@ import { JalaliDateService } from '../../shared/services/jalali-date.service';
       <header class="fade-up">
         <h1>نزدیک‌ها</h1>
         <p class="lead">تولدهای ۳۰ روز آینده، به‌ترتیب نزدیک‌ترین</p>
+        <figure class="mood">
+          <img
+            src="/images/yademoon-upcoming-banner.jpg"
+            alt="تقویم و یادداشت‌های نرم برای تولدهای نزدیک"
+            width="800"
+            height="450"
+          />
+        </figure>
       </header>
 
       @if (loading()) {
@@ -25,6 +33,7 @@ import { JalaliDateService } from '../../shared/services/jalali-date.service';
           title="تولد نزدیکی نیست"
           hint="در ۳۰ روز آینده تولدی ثبت نشده. کسی را اضافه کن یا بعداً سر بزن."
           ctaLabel="افزودن نفر"
+          imageSrc="/images/yademoon-empty-hearts.jpg"
         />
       } @else {
         <ul class="list fade-up">
@@ -65,8 +74,21 @@ import { JalaliDateService } from '../../shared/services/jalali-date.service';
       color: var(--rose);
     }
     .lead {
-      margin: 0.35rem 0 1.25rem;
+      margin: 0.35rem 0 0.9rem;
       color: color-mix(in srgb, var(--ink) 65%, transparent);
+    }
+    .mood {
+      margin: 0 0 1.25rem;
+      border-radius: 18px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      max-height: 180px;
+    }
+    .mood img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
     .list {
       list-style: none;

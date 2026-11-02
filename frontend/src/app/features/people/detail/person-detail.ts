@@ -17,6 +17,14 @@ import { LoadingComponent } from '../../../shared/components/loading/loading';
       } @else if (person(); as p) {
         <a routerLink="/people" class="back">بازگشت</a>
         <article class="fade-up">
+          <figure class="mood">
+            <img
+              src="/images/yademoon-auth-hero.jpg"
+              alt="شمع تولد و حال‌وهوای گرم یادآوری"
+              width="800"
+              height="450"
+            />
+          </figure>
           <h1>{{ p.name }}</h1>
           <p class="relation">{{ labels[p.relation] }}</p>
           <p class="stat">
@@ -59,6 +67,19 @@ import { LoadingComponent } from '../../../shared/components/loading/loading';
     .back {
       text-decoration: none;
       color: color-mix(in srgb, var(--ink) 65%, transparent);
+    }
+    .mood {
+      margin: 0.85rem 0 0.35rem;
+      border-radius: 18px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      max-height: 180px;
+    }
+    .mood img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
     h1 {
       margin: 0.75rem 0 0.25rem;
