@@ -6,7 +6,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   imports: [RouterLink, RouterLinkActive],
   template: `
     <nav class="bottom-nav" aria-label="ناوبری اصلی">
-      <div class="nav-side">
+      <div class="side">
         <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
           <span class="icon" aria-hidden="true">⌂</span>
           <span>خانه</span>
@@ -21,11 +21,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
         <span class="plus" aria-hidden="true">+</span>
       </a>
 
-      <div class="nav-side">
+      <div class="side">
         <a routerLink="/settings" routerLinkActive="active" class="nav-item">
           <span class="icon" aria-hidden="true">⚙</span>
           <span>تنظیمات</span>
         </a>
+        <span class="nav-item phantom" aria-hidden="true"></span>
       </div>
     </nav>
   `,
@@ -36,26 +37,29 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       bottom: 0;
       z-index: 40;
       display: grid;
-      grid-template-columns: 1fr 3.5rem 1fr;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
+      column-gap: 0.25rem;
       min-height: 4rem;
-      padding: 0.45rem 0.75rem calc(0.45rem + env(safe-area-inset-bottom));
+      padding: 0.35rem 0.35rem calc(0.35rem + env(safe-area-inset-bottom));
       background: color-mix(in srgb, var(--paper) 92%, transparent);
       backdrop-filter: blur(10px);
       border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
     }
-    .nav-side {
-      display: flex;
+    .side {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       align-items: center;
-      justify-content: space-evenly;
       min-width: 0;
     }
     .nav-item {
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       gap: 0.15rem;
-      padding: 0.35rem 0.5rem;
+      min-height: 2.75rem;
+      padding: 0.25rem;
       color: color-mix(in srgb, var(--ink) 55%, transparent);
       text-decoration: none;
       font-size: 0.75rem;
@@ -69,14 +73,17 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       font-size: 1.15rem;
       line-height: 1;
     }
+    .nav-item.phantom {
+      visibility: hidden;
+      pointer-events: none;
+    }
     .cta {
-      justify-self: center;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 3.25rem;
       height: 3.25rem;
-      margin-top: -1.35rem;
+      margin-top: -1.25rem;
       border-radius: 50%;
       background: linear-gradient(145deg, var(--rose), var(--apricot));
       color: white;
