@@ -35,7 +35,7 @@ import { environment } from '../../../environments/environment';
   `,
   styles: `
     .page {
-      padding: 1.15rem 1rem 6.25rem;
+      padding: 0.85rem 0.85rem calc(4.75rem + env(safe-area-inset-bottom));
       max-width: 40rem;
       margin: 0 auto;
     }
