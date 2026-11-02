@@ -1,0 +1,384 @@
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&family=Lalezar&display=swap');
+
+/* Color palette — light (default) */
+:root,
+:root[data-theme='light'] {
+  --rose: #c45c6a;
+  --rose-soft: #d88993;
+  --apricot: #e8a87c;
+  --apricot-deep: #d4895a;
+  --ink: #2c2420;
+  --ink-muted: color-mix(in srgb, var(--ink) 62%, transparent);
+  --paper: #fbf6f0;
+  --mist: #f3e0d4;
+  --panel: color-mix(in srgb, white 70%, transparent);
+  --panel-border: color-mix(in srgb, white 60%, transparent);
+  --field-bg: color-mix(in srgb, white 82%, var(--paper));
+  --field-border: color-mix(in srgb, var(--ink) 14%, transparent);
+  --danger: #a33b3b;
+  --nav-bg: color-mix(in srgb, var(--paper) 78%, transparent);
+  --shadow: color-mix(in srgb, var(--ink) 8%, transparent);
+  --scene-dim: 1.02;
+  --scene-sat: 0.92;
+  --font-body: 'Vazirmatn', Tahoma, sans-serif;
+  --font-display: 'Lalezar', 'Vazirmatn', Tahoma, sans-serif;
+  color-scheme: light;
+}
+
+/* Color palette — dark */
+:root[data-theme='dark'] {
+  --rose: #e08a96;
+  --rose-soft: #c45c6a;
+  --apricot: #f0b892;
+  --apricot-deep: #e8a87c;
+  --ink: #f4ebe4;
+  --ink-muted: color-mix(in srgb, var(--ink) 68%, transparent);
+  --paper: #1a1614;
+  --mist: #241f1c;
+  --panel: color-mix(in srgb, #2a2320 78%, transparent);
+  --panel-border: color-mix(in srgb, white 12%, transparent);
+  --field-bg: color-mix(in srgb, #322a26 88%, transparent);
+  --field-border: color-mix(in srgb, white 14%, transparent);
+  --danger: #f0a0a0;
+  --nav-bg: color-mix(in srgb, #1a1614 82%, transparent);
+  --shadow: color-mix(in srgb, black 45%, transparent);
+  --scene-dim: 0.55;
+  --scene-sat: 0.85;
+  color-scheme: dark;
+}
+
+/* Accent palettes (override primary pair; works with light/dark) */
+:root[data-palette='rose'],
+:root:not([data-palette]) {
+  --rose: #c45c6a;
+  --rose-soft: #d88993;
+  --apricot: #e8a87c;
+  --apricot-deep: #d4895a;
+}
+:root[data-theme='dark'][data-palette='rose'],
+:root[data-theme='dark']:not([data-palette]) {
+  --rose: #e08a96;
+  --rose-soft: #c45c6a;
+  --apricot: #f0b892;
+  --apricot-deep: #e8a87c;
+}
+
+:root[data-palette='coral'] {
+  --rose: #d46a5c;
+  --rose-soft: #e39286;
+  --apricot: #f0a07a;
+  --apricot-deep: #d88a5c;
+}
+:root[data-theme='dark'][data-palette='coral'] {
+  --rose: #ef9a8c;
+  --rose-soft: #d46a5c;
+  --apricot: #f5b898;
+  --apricot-deep: #f0a07a;
+}
+
+:root[data-palette='honey'] {
+  --rose: #c48a3a;
+  --rose-soft: #d6a85c;
+  --apricot: #e8c07a;
+  --apricot-deep: #c9a04a;
+}
+:root[data-theme='dark'][data-palette='honey'] {
+  --rose: #e0b05c;
+  --rose-soft: #c48a3a;
+  --apricot: #f0d090;
+  --apricot-deep: #e8c07a;
+}
+
+:root[data-palette='sage'] {
+  --rose: #6f8f6a;
+  --rose-soft: #8fad88;
+  --apricot: #c4b48a;
+  --apricot-deep: #9a8a5c;
+}
+:root[data-theme='dark'][data-palette='sage'] {
+  --rose: #9fbf98;
+  --rose-soft: #6f8f6a;
+  --apricot: #d4c8a0;
+  --apricot-deep: #c4b48a;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  direction: rtl;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--field-border);
+  border-radius: 12px;
+  padding: 0.7rem 0.85rem;
+  background: var(--field-bg);
+  color: var(--ink);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid color-mix(in srgb, var(--rose) 45%, transparent);
+  outline-offset: 1px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border: none;
+  border-radius: 999px;
+  padding: 0.72rem 1.15rem;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn.primary {
+  background: linear-gradient(145deg, var(--rose), var(--apricot));
+  color: white;
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--rose) 28%, transparent);
+}
+
+.btn.ghost {
+  background: color-mix(in srgb, var(--panel) 80%, transparent);
+  color: var(--rose);
+  border: 1px solid color-mix(in srgb, var(--rose) 40%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.btn.block {
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.error {
+  color: var(--danger);
+  margin: 0;
+}
+
+.fade-up {
+  animation: fade-up 420ms ease both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scene {
+  position: relative;
+  isolation: isolate;
+  min-height: 100dvh;
+}
+
+.scene::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-color: var(--paper);
+  background-image: var(--scene-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1.04);
+  filter: saturate(var(--scene-sat)) brightness(var(--scene-dim));
+}
+
+.scene::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--scene-wash);
+  pointer-events: none;
+}
+
+.scene--auth {
+  --scene-image: url('/images/yademoon-auth-hero.jpg');
+  --scene-wash: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper) 55%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 78%, transparent) 38%,
+    color-mix(in srgb, var(--mist) 90%, transparent) 100%
+  );
+}
+
+.scene--home {
+  --scene-image: url('/images/yademoon-dashboard-banner.jpg');
+  --scene-wash: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper) 42%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 55%, transparent) 48%,
+    color-mix(in srgb, var(--mist) 62%, transparent) 100%
+  );
+}
+
+.scene--people {
+  --scene-image: url('/images/yademoon-dashboard-banner.jpg');
+  --scene-wash: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--paper) 40%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 52%, transparent) 50%,
+    color-mix(in srgb, var(--mist) 64%, transparent) 100%
+  );
+}
+
+.scene--upcoming {
+  --scene-image: url('/images/yademoon-upcoming-banner.jpg');
+  --scene-wash: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper) 38%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 50%, transparent) 48%,
+    color-mix(in srgb, var(--mist) 62%, transparent) 100%
+  );
+}
+
+.scene--settings {
+  --scene-image: url('/images/yademoon-upcoming-banner.jpg');
+  --scene-wash: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper) 40%, transparent),
+    color-mix(in srgb, var(--mist) 60%, transparent)
+  );
+}
+
+.scene--form {
+  --scene-image: url('/images/yademoon-auth-hero.jpg');
+  --scene-wash: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper) 36%, transparent),
+    color-mix(in srgb, var(--mist) 58%, transparent)
+  );
+}
+
+.page-panel {
+  width: 100%;
+  background: var(--panel);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 1.05rem 1rem 1.15rem;
+  box-shadow: 0 10px 30px var(--shadow);
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  margin: 0.55rem 0 0.85rem;
+}
+
+.palette-card {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.65rem 0.7rem;
+  border-radius: 14px;
+  border: 1.5px solid var(--field-border);
+  background: var(--field-bg);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: start;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 140ms ease;
+}
+
+.palette-card:active {
+  transform: scale(0.98);
+}
+
+.palette-card.active {
+  border-color: var(--rose);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--rose) 28%, transparent);
+}
+
+.palette-card .swatches {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.palette-card .swatches i {
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 999px;
+  display: block;
+  border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+}
+
+.palette-card .name {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0.75rem 0.9rem;
+  border-radius: 14px;
+  border: 1px solid var(--field-border);
+  background: var(--field-bg);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  body {
+    font-size: 1.02rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    animation: none;
+  }
+}
