@@ -40,6 +40,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/people/form/person-form').then((m) => m.PersonFormPage),
   },
   {
+    path: 'upcoming',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/upcoming/upcoming').then((m) => m.UpcomingPage),
+  },
+  {
     path: 'settings',
     canActivate: [authGuard],
     loadComponent: () => import('./features/settings/settings').then((m) => m.SettingsPage),

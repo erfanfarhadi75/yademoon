@@ -22,11 +22,14 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       </a>
 
       <div class="side">
+        <a routerLink="/upcoming" routerLinkActive="active" class="nav-item">
+          <span class="icon" aria-hidden="true">◎</span>
+          <span>نزدیک</span>
+        </a>
         <a routerLink="/settings" routerLinkActive="active" class="nav-item">
           <span class="icon" aria-hidden="true">⚙</span>
           <span>تنظیمات</span>
         </a>
-        <span class="nav-item phantom" aria-hidden="true"></span>
       </div>
     </nav>
   `,
@@ -72,10 +75,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     .nav-item .icon {
       font-size: 1.15rem;
       line-height: 1;
-    }
-    .nav-item.phantom {
-      visibility: hidden;
-      pointer-events: none;
     }
     .cta {
       display: flex;
