@@ -47,6 +47,61 @@
   color-scheme: dark;
 }
 
+/* Accent palettes (override primary pair; works with light/dark) */
+:root[data-palette='rose'],
+:root:not([data-palette]) {
+  --rose: #c45c6a;
+  --rose-soft: #d88993;
+  --apricot: #e8a87c;
+  --apricot-deep: #d4895a;
+}
+:root[data-theme='dark'][data-palette='rose'],
+:root[data-theme='dark']:not([data-palette]) {
+  --rose: #e08a96;
+  --rose-soft: #c45c6a;
+  --apricot: #f0b892;
+  --apricot-deep: #e8a87c;
+}
+
+:root[data-palette='coral'] {
+  --rose: #d46a5c;
+  --rose-soft: #e39286;
+  --apricot: #f0a07a;
+  --apricot-deep: #d88a5c;
+}
+:root[data-theme='dark'][data-palette='coral'] {
+  --rose: #ef9a8c;
+  --rose-soft: #d46a5c;
+  --apricot: #f5b898;
+  --apricot-deep: #f0a07a;
+}
+
+:root[data-palette='honey'] {
+  --rose: #c48a3a;
+  --rose-soft: #d6a85c;
+  --apricot: #e8c07a;
+  --apricot-deep: #c9a04a;
+}
+:root[data-theme='dark'][data-palette='honey'] {
+  --rose: #e0b05c;
+  --rose-soft: #c48a3a;
+  --apricot: #f0d090;
+  --apricot-deep: #e8c07a;
+}
+
+:root[data-palette='sage'] {
+  --rose: #6f8f6a;
+  --rose-soft: #8fad88;
+  --apricot: #c4b48a;
+  --apricot-deep: #9a8a5c;
+}
+:root[data-theme='dark'][data-palette='sage'] {
+  --rose: #9fbf98;
+  --rose-soft: #6f8f6a;
+  --apricot: #d4c8a0;
+  --apricot-deep: #c4b48a;
+}
+
 *,
 *::before,
 *::after {
@@ -255,18 +310,51 @@ textarea:focus {
   box-shadow: 0 10px 30px var(--shadow);
 }
 
-.palette-swatches {
+.palette-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.5rem;
-  margin: 0.75rem 0 0.25rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  margin: 0.55rem 0 0.85rem;
 }
 
-.palette-swatches span {
-  aspect-ratio: 1;
-  border-radius: 12px;
-  border: 1px solid var(--panel-border);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, white 20%, transparent);
+.palette-card {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.65rem 0.7rem;
+  border-radius: 14px;
+  border: 1.5px solid var(--field-border);
+  background: var(--field-bg);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: start;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 140ms ease;
+}
+
+.palette-card:active {
+  transform: scale(0.98);
+}
+
+.palette-card.active {
+  border-color: var(--rose);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--rose) 28%, transparent);
+}
+
+.palette-card .swatches {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.palette-card .swatches i {
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 999px;
+  display: block;
+  border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+}
+
+.palette-card .name {
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .theme-toggle {

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../core/auth/auth.service';
-import { ThemeService } from '../../core/theme/theme.service';
+import { ColorPalette, ThemeService } from '../../core/theme/theme.service';
 import { IconComponent } from '../../shared/components/icon/icon';
 import { environment } from '../../../environments/environment';
 
@@ -22,13 +22,24 @@ import { environment } from '../../../environments/environment';
         </button>
 
         <p class="section-title">پالت رنگ</p>
-        <div class="palette-swatches" aria-label="پالت رنگ یادمون">
-          <span style="background: var(--rose)" title="رز"></span>
-          <span style="background: var(--apricot)" title="زردآلو"></span>
-          <span style="background: var(--ink)" title="مرکب"></span>
-          <span style="background: var(--paper)" title="کاغذ"></span>
+        <div class="palette-grid" role="listbox" aria-label="انتخاب پالت رنگ">
+          @for (p of theme.palettes; track p.id) {
+            <button
+              type="button"
+              class="palette-card"
+              role="option"
+              [class.active]="theme.palette() === p.id"
+              [attr.aria-selected]="theme.palette() === p.id"
+              (click)="pick(p.id)"
+            >
+              <span class="swatches" aria-hidden="true">
+                <i [style.background]="p.swatch"></i>
+                <i [style.background]="p.secondary"></i>
+              </span>
+              <span class="name">{{ p.label }}</span>
+            </button>
+          }
         </div>
-        <p class="palette-caption">رز · زردآلو · مرکب · کاغذ</p>
 
         <dl>
           <div>
@@ -67,6 +78,7 @@ import { environment } from '../../../environments/environment';
       font-family: var(--font-display);
       font-size: 1.85rem;
       color: var(--rose);
+      transition: color 180ms ease;
     }
     .lead {
       margin: 0.3rem 0 0.85rem;
@@ -84,14 +96,9 @@ import { environment } from '../../../environments/environment';
       color: var(--ink-muted);
     }
     .section-title {
-      margin: 1rem 0 0.35rem;
+      margin: 1rem 0 0.15rem;
       font-size: 0.85rem;
       font-weight: 600;
-    }
-    .palette-caption {
-      margin: 0.35rem 0 0.85rem;
-      font-size: 0.8rem;
-      color: var(--ink-muted);
     }
     dl div {
       padding: 0.65rem 0;
@@ -114,6 +121,10 @@ export class SettingsPage {
   readonly theme = inject(ThemeService);
   readonly productName = environment.productName;
   readonly version = environment.appVersion;
+
+  pick(id: ColorPalette): void {
+    this.theme.setPalette(id);
+  }
 
   logout(): void {
     void this.auth.logout();
