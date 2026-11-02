@@ -11,9 +11,9 @@
   --font-display: 'Lalezar', 'Vazirmatn', Tahoma, sans-serif;
   --scene-wash: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--paper) 88%, transparent) 0%,
-    color-mix(in srgb, var(--paper) 78%, transparent) 42%,
-    color-mix(in srgb, var(--mist) 86%, transparent) 100%
+    color-mix(in srgb, var(--paper) 72%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 62%, transparent) 45%,
+    color-mix(in srgb, var(--mist) 74%, transparent) 100%
   );
 }
 
@@ -168,28 +168,40 @@ textarea:focus {
 
 .scene--home {
   --scene-image: url('/images/yademoon-dashboard-banner.jpg');
+  --scene-wash: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper) 58%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 68%, transparent) 55%,
+    color-mix(in srgb, var(--mist) 78%, transparent) 100%
+  );
 }
 
 .scene--people {
   --scene-image: url('/images/yademoon-dashboard-banner.jpg');
   --scene-wash: linear-gradient(
     165deg,
-    color-mix(in srgb, var(--paper) 90%, transparent) 0%,
-    color-mix(in srgb, var(--paper) 80%, transparent) 50%,
-    color-mix(in srgb, var(--mist) 88%, transparent) 100%
+    color-mix(in srgb, var(--paper) 60%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 70%, transparent) 55%,
+    color-mix(in srgb, var(--mist) 80%, transparent) 100%
   );
 }
 
 .scene--upcoming {
   --scene-image: url('/images/yademoon-upcoming-banner.jpg');
+  --scene-wash: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper) 55%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 66%, transparent) 50%,
+    color-mix(in srgb, var(--mist) 78%, transparent) 100%
+  );
 }
 
 .scene--settings {
   --scene-image: url('/images/yademoon-upcoming-banner.jpg');
   --scene-wash: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--paper) 86%, transparent),
-    color-mix(in srgb, var(--mist) 90%, transparent)
+    color-mix(in srgb, var(--paper) 58%, transparent),
+    color-mix(in srgb, var(--mist) 76%, transparent)
   );
 }
 
@@ -197,17 +209,17 @@ textarea:focus {
   --scene-image: url('/images/yademoon-auth-hero.jpg');
   --scene-wash: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--paper) 84%, transparent),
-    color-mix(in srgb, var(--mist) 88%, transparent)
+    color-mix(in srgb, var(--paper) 52%, transparent),
+    color-mix(in srgb, var(--mist) 74%, transparent)
   );
 }
 
 .page-panel {
-  background: color-mix(in srgb, white 58%, transparent);
-  backdrop-filter: blur(10px);
-  border: 1px solid color-mix(in srgb, white 55%, transparent);
+  background: color-mix(in srgb, white 72%, transparent);
+  backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in srgb, white 60%, transparent);
   border-radius: 20px;
-  padding: 1.15rem 1.1rem 1.25rem;
+  padding: 1.05rem 1rem 1.15rem;
   box-shadow: 0 10px 30px color-mix(in srgb, var(--ink) 6%, transparent);
 }
 
