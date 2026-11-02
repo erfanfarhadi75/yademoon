@@ -3,11 +3,13 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PeopleApiService } from '../../../core/api/people.service';
 import { PersonDto, RELATION_LABELS } from '../../../shared/models/person';
 import { JalaliDateService } from '../../../shared/services/jalali-date.service';
+import { GoogleCalendarService } from '../../../shared/services/google-calendar.service';
 import { LoadingComponent } from '../../../shared/components/loading/loading';
+import { IconComponent } from '../../../shared/components/icon/icon';
 
 @Component({
   selector: 'app-person-detail',
-  imports: [RouterLink, LoadingComponent],
+  imports: [RouterLink, LoadingComponent, IconComponent],
   template: `
     <section class="scene scene--form page">
       <div class="page-panel fade-up">
@@ -16,7 +18,10 @@ import { LoadingComponent } from '../../../shared/components/loading/loading';
         } @else if (error()) {
           <p class="error">{{ error() }}</p>
         } @else if (person(); as p) {
-          <a routerLink="/people" class="back">بازگشت</a>
+          <a routerLink="/people" class="back">
+            <app-icon name="arrow-right" [size]="16" />
+            بازگشت
+          </a>
           <h1>{{ p.name }}</h1>
           <p class="relation">{{ labels[p.relation] }}</p>
           <p class="stat">
@@ -43,8 +48,18 @@ import { LoadingComponent } from '../../../shared/components/loading/loading';
             }
           </dl>
           <div class="actions">
-            <a class="btn primary" [routerLink]="['/people', p.id, 'edit']">ویرایش</a>
-            <button class="btn ghost" type="button" (click)="remove(p.id)">حذف</button>
+            <button class="btn primary" type="button" (click)="addToCalendar(p)">
+              <app-icon name="calendar" [size]="18" />
+              گوگل کلندر
+            </button>
+            <a class="btn ghost" [routerLink]="['/people', p.id, 'edit']">
+              <app-icon name="edit" [size]="18" />
+              ویرایش
+            </a>
+            <button class="btn ghost danger" type="button" (click)="remove(p.id)">
+              <app-icon name="trash" [size]="18" />
+              حذف
+            </button>
           </div>
         }
       </div>
@@ -57,8 +72,11 @@ import { LoadingComponent } from '../../../shared/components/loading/loading';
       margin: 0 auto;
     }
     .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
       text-decoration: none;
-      color: color-mix(in srgb, var(--ink) 65%, transparent);
+      color: var(--ink-muted);
       font-size: 0.92rem;
     }
     h1 {
@@ -69,7 +87,7 @@ import { LoadingComponent } from '../../../shared/components/loading/loading';
     }
     .relation {
       margin: 0;
-      color: color-mix(in srgb, var(--ink) 65%, transparent);
+      color: var(--ink-muted);
     }
     .stat {
       margin: 0.75rem 0;
@@ -81,18 +99,23 @@ import { LoadingComponent } from '../../../shared/components/loading/loading';
     }
     dl div {
       padding: 0.55rem 0;
-      border-bottom: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
     }
     dt {
       font-size: 0.78rem;
-      color: color-mix(in srgb, var(--ink) 55%, transparent);
+      color: var(--ink-muted);
     }
     dd {
       margin: 0.15rem 0 0;
     }
     .actions {
       display: flex;
-      gap: 0.65rem;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+    .btn.danger {
+      color: var(--danger);
+      border-color: color-mix(in srgb, var(--danger) 40%, transparent);
     }
   `,
 })
@@ -100,6 +123,7 @@ export class PersonDetailPage implements OnInit {
   private readonly api = inject(PeopleApiService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly calendar = inject(GoogleCalendarService);
   readonly jalali = inject(JalaliDateService);
   readonly labels = RELATION_LABELS;
   readonly person = signal<PersonDto | null>(null);
@@ -118,6 +142,10 @@ export class PersonDetailPage implements OnInit {
         this.loading.set(false);
       },
     });
+  }
+
+  addToCalendar(person: PersonDto): void {
+    this.calendar.openBirthday(person);
   }
 
   remove(id: string): void {

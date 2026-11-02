@@ -1,20 +1,50 @@
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&family=Lalezar&display=swap');
 
-:root {
+/* Color palette — light (default) */
+:root,
+:root[data-theme='light'] {
   --rose: #c45c6a;
+  --rose-soft: #d88993;
   --apricot: #e8a87c;
   --apricot-deep: #d4895a;
   --ink: #2c2420;
+  --ink-muted: color-mix(in srgb, var(--ink) 62%, transparent);
   --paper: #fbf6f0;
   --mist: #f3e0d4;
+  --panel: color-mix(in srgb, white 70%, transparent);
+  --panel-border: color-mix(in srgb, white 60%, transparent);
+  --field-bg: color-mix(in srgb, white 82%, var(--paper));
+  --field-border: color-mix(in srgb, var(--ink) 14%, transparent);
+  --danger: #a33b3b;
+  --nav-bg: color-mix(in srgb, var(--paper) 78%, transparent);
+  --shadow: color-mix(in srgb, var(--ink) 8%, transparent);
+  --scene-dim: 1.02;
+  --scene-sat: 0.92;
   --font-body: 'Vazirmatn', Tahoma, sans-serif;
   --font-display: 'Lalezar', 'Vazirmatn', Tahoma, sans-serif;
-  --scene-wash: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--paper) 72%, transparent) 0%,
-    color-mix(in srgb, var(--paper) 62%, transparent) 45%,
-    color-mix(in srgb, var(--mist) 74%, transparent) 100%
-  );
+  color-scheme: light;
+}
+
+/* Color palette — dark */
+:root[data-theme='dark'] {
+  --rose: #e08a96;
+  --rose-soft: #c45c6a;
+  --apricot: #f0b892;
+  --apricot-deep: #e8a87c;
+  --ink: #f4ebe4;
+  --ink-muted: color-mix(in srgb, var(--ink) 68%, transparent);
+  --paper: #1a1614;
+  --mist: #241f1c;
+  --panel: color-mix(in srgb, #2a2320 78%, transparent);
+  --panel-border: color-mix(in srgb, white 12%, transparent);
+  --field-bg: color-mix(in srgb, #322a26 88%, transparent);
+  --field-border: color-mix(in srgb, white 14%, transparent);
+  --danger: #f0a0a0;
+  --nav-bg: color-mix(in srgb, #1a1614 82%, transparent);
+  --shadow: color-mix(in srgb, black 45%, transparent);
+  --scene-dim: 0.55;
+  --scene-sat: 0.85;
+  color-scheme: dark;
 }
 
 *,
@@ -34,6 +64,7 @@ body {
   color: var(--ink);
   background: var(--paper);
   -webkit-font-smoothing: antialiased;
+  transition: background-color 220ms ease, color 220ms ease;
 }
 
 button,
@@ -53,10 +84,10 @@ input,
 select,
 textarea {
   width: 100%;
-  border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  border: 1px solid var(--field-border);
   border-radius: 12px;
   padding: 0.7rem 0.85rem;
-  background: color-mix(in srgb, white 82%, var(--paper));
+  background: var(--field-bg);
   color: var(--ink);
 }
 
@@ -71,12 +102,13 @@ textarea:focus {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
+  gap: 0.45rem;
   border: none;
   border-radius: 999px;
-  padding: 0.75rem 1.25rem;
+  padding: 0.72rem 1.15rem;
   cursor: pointer;
   text-decoration: none;
+  font-weight: 600;
   transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
 }
 
@@ -91,7 +123,7 @@ textarea:focus {
 }
 
 .btn.ghost {
-  background: color-mix(in srgb, white 55%, transparent);
+  background: color-mix(in srgb, var(--panel) 80%, transparent);
   color: var(--rose);
   border: 1px solid color-mix(in srgb, var(--rose) 40%, transparent);
   backdrop-filter: blur(6px);
@@ -107,7 +139,7 @@ textarea:focus {
 }
 
 .error {
-  color: #a33b3b;
+  color: var(--danger);
   margin: 0;
 }
 
@@ -126,7 +158,6 @@ textarea:focus {
   }
 }
 
-/* Fixed atmospheric photo backgrounds — no layout height / scroll cost */
 .scene {
   position: relative;
   isolation: isolate;
@@ -144,7 +175,7 @@ textarea:focus {
   background-position: center;
   background-repeat: no-repeat;
   transform: scale(1.04);
-  filter: saturate(0.92) brightness(1.02);
+  filter: saturate(var(--scene-sat)) brightness(var(--scene-dim));
 }
 
 .scene::after {
@@ -216,12 +247,40 @@ textarea:focus {
 
 .page-panel {
   width: 100%;
-  background: color-mix(in srgb, white 70%, transparent);
+  background: var(--panel);
   backdrop-filter: blur(12px);
-  border: 1px solid color-mix(in srgb, white 60%, transparent);
+  border: 1px solid var(--panel-border);
   border-radius: 20px;
   padding: 1.05rem 1rem 1.15rem;
-  box-shadow: 0 10px 30px color-mix(in srgb, var(--ink) 6%, transparent);
+  box-shadow: 0 10px 30px var(--shadow);
+}
+
+.palette-swatches {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin: 0.75rem 0 0.25rem;
+}
+
+.palette-swatches span {
+  aspect-ratio: 1;
+  border-radius: 12px;
+  border: 1px solid var(--panel-border);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, white 20%, transparent);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0.75rem 0.9rem;
+  border-radius: 14px;
+  border: 1px solid var(--field-border);
+  background: var(--field-bg);
+  color: var(--ink);
+  cursor: pointer;
 }
 
 @media (min-width: 768px) {

@@ -2,11 +2,12 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
+import { IconComponent } from '../../../shared/components/icon/icon';
 import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, IconComponent],
   template: `
     <section class="scene scene--auth auth-page">
       <div class="auth-shell page-panel fade-up">
@@ -27,6 +28,7 @@ import { environment } from '../../../../environments/environment';
             <p class="error">{{ error() }}</p>
           }
           <button class="btn primary block" type="submit" [disabled]="form.invalid || busy()">
+            <app-icon name="login" [size]="18" />
             ورود
           </button>
         </form>

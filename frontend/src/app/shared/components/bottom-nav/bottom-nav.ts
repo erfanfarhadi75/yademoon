@@ -1,33 +1,34 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { IconComponent } from '../icon/icon';
 
 @Component({
   selector: 'app-bottom-nav',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, IconComponent],
   template: `
     <nav class="bottom-nav" aria-label="ناوبری اصلی">
       <div class="side">
         <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
-          <span class="icon" aria-hidden="true">⌂</span>
+          <app-icon name="home" [size]="20" />
           <span>خانه</span>
         </a>
         <a routerLink="/people" routerLinkActive="active" class="nav-item">
-          <span class="icon" aria-hidden="true">♡</span>
+          <app-icon name="heart" [size]="20" />
           <span>افراد</span>
         </a>
       </div>
 
       <a routerLink="/people/new" class="cta" aria-label="افزودن فرد">
-        <span class="plus" aria-hidden="true">+</span>
+        <app-icon name="plus" [size]="26" />
       </a>
 
       <div class="side">
         <a routerLink="/upcoming" routerLinkActive="active" class="nav-item">
-          <span class="icon" aria-hidden="true">◎</span>
+          <app-icon name="target" [size]="20" />
           <span>نزدیک</span>
         </a>
         <a routerLink="/settings" routerLinkActive="active" class="nav-item">
-          <span class="icon" aria-hidden="true">⚙</span>
+          <app-icon name="settings" [size]="20" />
           <span>تنظیمات</span>
         </a>
       </div>
@@ -45,9 +46,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       column-gap: 0.25rem;
       min-height: 4rem;
       padding: 0.35rem 0.35rem calc(0.35rem + env(safe-area-inset-bottom));
-      background: color-mix(in srgb, var(--paper) 78%, transparent);
+      background: var(--nav-bg);
       backdrop-filter: blur(14px);
-      border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+      border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
     }
     .side {
       display: grid;
@@ -60,10 +61,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.15rem;
+      gap: 0.2rem;
       min-height: 2.75rem;
       padding: 0.25rem;
-      color: color-mix(in srgb, var(--ink) 55%, transparent);
+      color: var(--ink-muted);
       text-decoration: none;
       font-size: 0.75rem;
       transition: color 160ms ease, transform 160ms ease;
@@ -71,10 +72,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     .nav-item.active {
       color: var(--rose);
       font-weight: 600;
-    }
-    .nav-item .icon {
-      font-size: 1.15rem;
-      line-height: 1;
     }
     .cta {
       display: flex;
@@ -92,11 +89,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     }
     .cta:active {
       transform: scale(0.96);
-    }
-    .plus {
-      font-size: 1.75rem;
-      line-height: 1;
-      font-weight: 300;
     }
   `,
 })

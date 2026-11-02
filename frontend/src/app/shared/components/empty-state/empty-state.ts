@@ -1,9 +1,10 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { IconComponent } from '../icon/icon';
 
 @Component({
   selector: 'app-empty-state',
-  imports: [RouterLink],
+  imports: [RouterLink, IconComponent],
   template: `
     <div class="empty fade-up">
       @if (imageSrc()) {
@@ -12,7 +13,10 @@ import { RouterLink } from '@angular/router';
       <p class="title">{{ title() }}</p>
       <p class="hint">{{ hint() }}</p>
       @if (ctaLabel()) {
-        <a class="btn primary" [routerLink]="ctaLink()">{{ ctaLabel() }}</a>
+        <a class="btn primary" [routerLink]="ctaLink()">
+          <app-icon name="user-plus" [size]="18" />
+          {{ ctaLabel() }}
+        </a>
       }
     </div>
   `,

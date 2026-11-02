@@ -5,14 +5,18 @@ import { PeopleApiService } from '../../../core/api/people.service';
 import { RELATION_LABELS, RelationType } from '../../../shared/models/person';
 import { JalaliDateService } from '../../../shared/services/jalali-date.service';
 import { LoadingComponent } from '../../../shared/components/loading/loading';
+import { IconComponent } from '../../../shared/components/icon/icon';
 
 @Component({
   selector: 'app-person-form',
-  imports: [ReactiveFormsModule, RouterLink, LoadingComponent],
+  imports: [ReactiveFormsModule, RouterLink, LoadingComponent, IconComponent],
   template: `
     <section class="scene scene--form page">
       <div class="page-panel fade-up">
-        <a routerLink="/people" class="back">بازگشت</a>
+        <a routerLink="/people" class="back">
+          <app-icon name="arrow-right" [size]="16" />
+          بازگشت
+        </a>
         <h1>{{ isEdit() ? 'ویرایش' : 'افزودن فرد' }}</h1>
 
         @if (loading()) {
@@ -71,9 +75,10 @@ import { LoadingComponent } from '../../../shared/components/loading/loading';
               <p class="error">{{ error() }}</p>
             }
 
-            <button class="btn primary block" type="submit" [disabled]="form.invalid || saving()">
-              ذخیره
-            </button>
+          <button class="btn primary block" type="submit" [disabled]="form.invalid || saving()">
+            <app-icon name="save" [size]="18" />
+            ذخیره
+          </button>
           </form>
         }
       </div>
@@ -86,9 +91,11 @@ import { LoadingComponent } from '../../../shared/components/loading/loading';
       margin: 0 auto;
     }
     .back {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
       margin-bottom: 0.55rem;
-      color: color-mix(in srgb, var(--ink) 65%, transparent);
+      color: var(--ink-muted);
       text-decoration: none;
       font-size: 0.92rem;
     }

@@ -4,12 +4,13 @@ import { PeopleApiService } from '../../core/api/people.service';
 import { DashboardDto, RELATION_LABELS, PersonDto } from '../../shared/models/person';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state';
 import { LoadingComponent } from '../../shared/components/loading/loading';
+import { IconComponent } from '../../shared/components/icon/icon';
 import { JalaliDateService } from '../../shared/services/jalali-date.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterLink, EmptyStateComponent, LoadingComponent],
+  imports: [RouterLink, EmptyStateComponent, LoadingComponent, IconComponent],
   template: `
     <section class="scene scene--home page">
       <div class="page-panel fade-up">
@@ -86,7 +87,10 @@ import { environment } from '../../../environments/environment';
             </section>
           }
 
-          <a class="btn primary block add" routerLink="/people/new">افزودن نفر جدید</a>
+          <a class="btn primary block add" routerLink="/people/new">
+            <app-icon name="user-plus" [size]="18" />
+            افزودن نفر جدید
+          </a>
         }
       </div>
     </section>
